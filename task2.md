@@ -2,9 +2,9 @@
 
 Мужчина, 32 года, родился 1 ноября 1992
 
-+7 (950) 1748609 — предпочитаемый способ связи  •  telegram: @yeahyouknowme
+telegram: @yeahyouknowme
 
-mingazhev.r@gmail.com
+e-mail: mingazhev.r@gmail.com
 
 Проживает: Ижевск
 
@@ -16,7 +16,6 @@ mingazhev.r@gmail.com
 
 DevOps-инженер
 
-100 000 ₽ на руки
 
 Специализации:
 
