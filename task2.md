@@ -4,7 +4,7 @@
 
 +7 (950) 1748609 — предпочитаемый способ связи  •  telegram: @yeahyouknowme
 
-zik-92@bk.ru
+mingazhev.r@gmail.com
 
 Проживает: Ижевск
 
