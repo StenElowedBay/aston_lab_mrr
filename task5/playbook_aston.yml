@@ -1,0 +1,84 @@
+---
+- name: Update system packages, install Nginx and change default Web page
+  hosts: all
+  become: yes
+
+  vars:
+    source_file: ./MyWebSite/index.html
+    source_config: ./MyWebSite/app.local
+
+  tasks:
+    - name: Check and Print Linux Version
+      debug:
+        var: ansible_os_family
+
+    - block:  # ==== Block for RedHat ====
+        - name: Update system packages for RedHat
+          yum:
+            name: "*"
+            state: latest
+
+        - name: Install Nginx
+          yum:
+            name: nginx
+            state: present
+
+        - name: Copy my config to Servers
+          copy:
+            src: "{{ source_config }}"
+            dest: /etc/nginx/conf.d/app.local.conf
+            mode: 0644
+
+        - name: Copy MyHomePage to Servers
+          copy:
+            src: "{{ source_file }}"
+            dest: /usr/share/nginx/html/index.html
+            mode: 0644
+          notify: Restart Nginx service
+
+        - name: Start Nginx service and make it enable for RedHat
+          service:
+            name: nginx
+            state: started
+            enabled: yes
+
+      when: ansible_os_family == "RedHat"
+
+    - block:  # ==== Block for Debian ====
+        - name: Update system packages for Debian
+          apt:
+            update_cache: yes
+            upgrade: dist
+            cache_valid_time: 3600
+
+        - name: Install Nginx
+          apt:
+            name: nginx
+            state: present
+
+        - name: Copy my config to Servers
+          copy:
+            src: "{{ source_config }}"
+            dest: /etc/nginx/sites-available/app.local
+            mode: 0644
+
+        - name: Copy MyHomePage to Servers
+          copy:
+            src: "{{ source_file }}"
+            dest: /var/www/html/index.html
+            mode: 0644
+          notify: Restart Nginx service
+
+        - name: Start Nginx service and make it enable for Debian
+          service:
+            name: nginx
+            state: started
+            enabled: yes
+
+      when: ansible_os_family == "Debian"
+
+  handlers:
+    - name: Restart Nginx service
+      service:
+        name: nginx
+        state: restarted
