@@ -1,0 +1,22 @@
+services:
+  nginx:
+    image: nginx:alpine
+    ports:
+      - "8080:80"
+    volumes:
+      - ./nginx/nginx.conf:/etc/nginx/nginx.conf
+      - ./nginx/conf.d:/etc/nginx/conf.d
+    depends_on:
+      - kanban-app
+      - frontend
+    restart: unless-stopped
+
+  kanban-app:
+    build: ./kanban-backend
+    restart: unless-stopped
+
+  frontend:
+    build: ./kanban-frontend
+    depends_on:
+      - kanban-app
+    restart: unless-stopped
